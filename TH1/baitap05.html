@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Management - Bài Tập 05</title>
+    <link rel="stylesheet" href="baitap05.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-left">
+            <span class="logo">HR Management</span>
+            <a href="#">Home</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="nav-right">
+            <input type="text" placeholder="Search...">
+            <button class="btn-search">Search</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header-table">
+            <h2>Employee</h2>
+            <button class="btn-add" id="openModalBtn">+ Add</button>
+        </div>
+
+        <table class="employee-table" id="empTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Position</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Fatima Beatriz</td>
+                    <td>FatimaBeatriz@gmail.com</td>
+                    <td>0985674321</td>
+                    <td>Staff</td>
+                    <td>
+                        <button class="btn-edit">Edit</button>
+                        <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal" id="employeeModal">
+        <div class="modal-header">
+            New Employee
+            <span style="cursor:pointer" id="closeX">X</span>
+        </div>
+        <div class="modal-body">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="newName" placeholder="Enter name">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="newEmail" placeholder="Enter email">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="text" id="newPhone" placeholder="Enter phone">
+                </div>
+                <div class="form-group">
+                    <label>Position</label>
+                    <select id="newPosition">
+                        <option value="Staff">Staff</option>
+                        <option value="Manager">Manager</option>
+                        <option value="CEO">CEO</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Sex</label>
+                <input type="radio" name="sex" value="Male" checked> Male 
+                <input type="radio" name="sex" value="Female"> Female
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-save" id="saveBtn">Save</button>
+            <button class="btn-cancel" id="closeModalBtn">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('employeeModal');
+        const openBtn = document.getElementById('openModalBtn');
+        const closeBtn = document.getElementById('closeModalBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const tableBody = document.querySelector('#empTable tbody');
+
+        // Hiện Modal
+        openBtn.onclick = () => modal.style.display = "block";
+
+        // Ẩn Modal
+        const hideModal = () => modal.style.display = "none";
+        closeBtn.onclick = hideModal;
+        document.getElementById('closeX').onclick = hideModal;
+
+        // Logic thêm nhân viên mới
+        saveBtn.onclick = function() {
+            const name = document.getElementById('newName').value;
+            const email = document.getElementById('newEmail').value;
+            const phone = document.getElementById('newPhone').value;
+            const pos = document.getElementById('newPosition').value;
+
+            if(!name || !email) return alert("Nhập đủ thông tin bro ơi!");
+
+            const newRow = tableBody.insertRow();
+            newRow.innerHTML = `
+                <td>${tableBody.rows.length}</td>
+                <td>${name}</td>
+                <td>${email}</td>
+                <td>${phone}</td>
+                <td>${pos}</td>
+                <td>
+                    <button class="btn-edit">Edit</button>
+                    <button class="btn-delete" onclick="deleteRow(this)">Delete</button>
+                </td>
+            `;
+            hideModal();
+            // Reset form
+            document.getElementById('newName').value = "";
+            document.getElementById('newEmail').value = "";
+        }
+
+        // Logic xóa nhân viên
+        function deleteRow(btn) {
+            if(confirm("Xóa thật hả bro?")) {
+                btn.parentElement.parentElement.remove();
+            }
+        }
+    </script>
+</body>
+</html>
