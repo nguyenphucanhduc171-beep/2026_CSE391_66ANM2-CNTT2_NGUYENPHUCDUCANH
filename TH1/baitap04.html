@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý Nhân viên - Bài Tập 04</title>
+    <link rel="stylesheet" href="baitap04.css">
+</head>
+<body>
+    <form class="employee-form">
+        <div class="section-header">Basic Info</div>
+        <hr>
+        <table class="form-table">
+            <tr><td>Employee ID</td><td>9</td></tr>
+            <tr><td>Last Name</td><td>Dodsworth</td></tr>
+            <tr><td>First Name</td><td><input type="text" value="Anne"></td></tr>
+            <tr>
+                <td>Gender</td>
+                <td>
+                    <label><input type="radio" name="gender"> Male</label><br>
+                    <label><input type="radio" name="gender"> Female</label><br>
+                    <label><input type="radio" name="gender"> XXX</label><br>
+                    <label><input type="radio" name="gender" checked> ZZZ</label>
+                </td>
+            </tr>
+            <tr><td>Title</td><td><input type="text" value="Sales Representative"></td></tr>
+            <tr><td>Suffix</td><td><input type="text" value="Ms."></td></tr>
+            <tr><td>BirthDate</td><td><input type="text" value="1969-07-02 00:00:00"> (?)</td></tr>
+            <tr><td>HireDate</td><td><input type="text" value="1994-11-15 00:00:00"></td></tr>
+            <tr><td>SSN # (if applicable)</td><td><input type="text" class="with-icon"></td></tr>
+            <tr>
+                <td>Reports To</td>
+                <td>
+                    <select><option>Buchanan</option></select>
+                </td>
+            </tr>
+        </table>
+
+        <div class="section-header">Contact Info</div>
+        <hr>
+        <table class="form-table">
+            <tr><td>Email</td><td><input type="email" placeholder="name@example.com"></td></tr>
+            <tr><td>Address</td><td><input type="text" value="7 Houndstooth Rd."></td></tr>
+            <tr><td>City</td><td><input type="text" value="London"></td></tr>
+            <tr><td>Region</td><td><input type="text"></td></tr>
+            <tr><td>Postal Code</td><td><input type="text" value="WG2 7LT"></td></tr>
+            <tr>
+                <td>Country</td>
+                <td>
+                    <select><option>Russian Federation</option></select>
+                </td>
+            </tr>
+            <tr><td>US Home Phone</td><td><input type="text" value="(234)234-2342"></td></tr>
+            <tr><td>Photo</td><td><input type="text" value="EmpID9.bmp"></td></tr>
+        </table>
+
+        <div class="section-header">Optional Info</div>
+        <hr>
+        <table class="form-table">
+            <tr>
+                <td>Notes</td>
+                <td>
+                    <div class="editor-toolbar">B I S U ...</div>
+                    <textarea rows="8">Anne has a BA degree in English from St. Lawrence College. She is fluent in French and German.ZZZ</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>Preferred Shift</td>
+                <td>
+                    <label><input type="checkbox"> Regular</label><br>
+                    <label><input type="checkbox" checked> Gravy Yard</label>
+                </td>
+            </tr>
+            <tr><td>Active?</td><td><input type="checkbox" checked></td></tr>
+            <tr>
+                <td>Are you human?</td>
+                <td>
+                    <div class="captcha-box">TIDAWO</div>
+                    <div class="captcha-link">Click to change</div>
+                    <input type="text" class="full-width">
+                </td>
+            </tr>
+        </table>
+
+        <div class="form-footer">
+            <div class="nav-btns">
+                <button type="button">◀</button>
+                <button type="button">▶</button>
+            </div>
+            <div class="action-btns">
+                <button type="submit" class="btn-dark">💾 Submit</button>
+                <button type="button" class="btn-dark">✖ Cancel</button>
+            </div>
+        </div>
+        <div class="required-note">* required</div>
+    </form>
+</body>
+</html>

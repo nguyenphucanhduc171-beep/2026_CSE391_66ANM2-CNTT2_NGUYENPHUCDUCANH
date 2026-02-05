@@ -1,0 +1,89 @@
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+.employee-form {
+    background: #fff;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+.section-header {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-top: 15px;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+.form-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.form-table td {
+    padding: 4px 0;
+    vertical-align: top;
+}
+
+/* Cột nhãn bên trái */
+.form-table td:first-child {
+    width: 160px;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+input[type="text"], input[type="email"], select, textarea {
+    width: 95%;
+    padding: 4px;
+    border: 1px solid #888;
+    font-size: 0.9em;
+}
+
+.captcha-box {
+    font-family: 'Courier New', monospace;
+    font-size: 24px;
+    letter-spacing: 8px;
+    margin-top: 10px;
+}
+
+.captcha-link {
+    font-size: 0.8em;
+    text-decoration: underline;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.form-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #ccc;
+    margin-top: 20px;
+    padding-top: 10px;
+}
+
+.btn-dark {
+    background-color: #444;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.required-note {
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 5px;
+}
