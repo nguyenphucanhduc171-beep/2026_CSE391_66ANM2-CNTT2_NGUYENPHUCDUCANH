@@ -1,0 +1,35 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Quicksand", sans-serif;
+  background: #2b0033; 
+}
+
+#page {
+  max-width: 1100px;
+  margin: 18px auto;
+  border: 2px solid #ad5a3c; 
+  position: relative;
+  background: transparent;
+}
+
+#page::before {
+  content: "";
+  position: absolute;
+  inset: 4px;            
+  border: 3px solid #ff4fd8;
+  pointer-events: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

@@ -1,0 +1,149 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Quicksand", sans-serif;
+}
+
+/* HEADER */
+header {
+  position: absolute;
+  top: 12px;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 22px;
+}
+
+#page-logo a {
+  font-family: "Oleo Script", cursive;
+  font-size: 32px;
+  color: #ffd34d;
+  text-transform: uppercase;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 20px;
+}
+a {
+  text-decoration: none;
+}
+nav a {
+  font-family: "Raleway", sans-serif;
+  font-size: 11px;
+  color: #ffd34d;
+  border: 1px solid #ffd34d;
+  padding: 4px 12px;
+  background: rgba(0,0,0,0.2);
+}
+
+/* HERO */
+#hero {
+  height: 320px;
+  background: url("assets/extra-files/ocean.jpg") center/cover no-repeat;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#hero-content {
+  background: rgba(35,35,35,0.75);
+  padding: 26px 34px;
+  text-align: center;
+}
+
+#hero-content h1 {
+  color: white;
+  font-size: 22px;
+}
+
+#hero-content p {
+  color: #ddd;
+  font-size: 10px;
+  margin: 8px 0;
+}
+
+#hero-content a {
+  background: #ffd34d;
+  color: black;
+  padding: 5px 12px;
+  font-size: 10px;
+}
+
+/* HIGHLIGHTS */
+#highlights {
+  background: #cfefff;
+  padding: 30px;
+}
+
+#highlights h2 {
+  text-align: center;
+  font-size: 12px;
+  margin-bottom: 20px;
+}
+
+/* FLEX */
+.destinations {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+}
+
+.destination {
+  width: 300px;
+  text-align: center;
+}
+.destination strong{
+  color: #1aa3a3;
+}
+/* CHỈ KHUNG ẢNH */
+.img-box {
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+}
+
+.img-box img {
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+  display: block;
+}
+
+/* CHỮ NGOÀI KHUNG */
+.destination p {
+  margin-top: 10px;
+  font-size: 9px;
+  text-transform: uppercase;
+  color: #555;
+}
+
+/* FOOTER */
+footer {
+  background: #111;
+  padding: 20px;
+}
+
+footer ul {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+footer img {
+  width: 25px;
+}
