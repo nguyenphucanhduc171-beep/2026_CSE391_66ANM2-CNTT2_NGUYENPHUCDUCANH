@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Đăng Ký - Validation Lab</title>
+    <style>
+        :root {
+    --primary-color: #4f46e5;      /* Màu xanh Indigo hiện đại */
+    --primary-hover: #4338ca;
+    --error-color: #ef4444;        /* Đỏ san hô */
+    --success-color: #10b981;      /* Xanh lục */
+    --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --text-main: #1f2937;
+    --text-muted: #6b7280;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--bg-gradient);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    color: var(--text-main);
+}
+
+.container {
+    background: #ffffff;
+    padding: 2.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    width: 100%;
+    max-width: 450px;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+}
+
+.container:hover {
+    transform: translateY(-5px);
+}
+
+h2 {
+    text-align: center;
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    background: var(--bg-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #374151;
+}
+
+input[type="text"], 
+input[type="email"], 
+input[type="password"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hiệu ứng focus "sang chảnh" */
+input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+}
+
+/* Style cho trạng thái lỗi */
+input.invalid {
+    border-color: var(--error-color);
+    background-color: #fef2f2;
+}
+
+input.invalid:focus {
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+}
+
+/* Style cho trạng thái hợp lệ */
+input.valid {
+    border-color: var(--success-color);
+}
+
+.error-msg {
+    color: var(--error-color);
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-top: 0.4rem;
+    height: 1rem; /* Giữ vị trí không bị giật khi hiện lỗi */
+    display: block;
+}
+
+.gender-group, .terms-group {
+    background: #f9fafb;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+button {
+    width: 100%;
+    padding: 0.875rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.3);
+}
+
+button:hover {
+    background: var(--primary-hover);
+    box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+#successMessage {
+    text-align: center;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <form id="registerForm" novalidate>
+        <h2>Đăng Ký Tài Khoản</h2>
+
+        <div class="form-group">
+            <label for="fullname">Họ và tên</label>
+            <input type="text" id="fullname" placeholder="Nhập họ và tên">
+            <span class="error-msg" id="error-fullname"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="name@domain.com">
+            <span class="error-msg" id="error-email"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Số điện thoại</label>
+            <input type="text" id="phone" placeholder="0xxxxxxxxx">
+            <span class="error-msg" id="error-phone"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Mật khẩu</label>
+            <input type="password" id="password" placeholder="8+ ký tự, 1 hoa, 1 số">
+            <span class="error-msg" id="error-password"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="confirmPassword">Xác nhận mật khẩu</label>
+            <input type="password" id="confirmPassword">
+            <span class="error-msg" id="error-confirmPassword"></span>
+        </div>
+
+        <div class="gender-group">
+            <label>Giới tính:</label>
+            <input type="radio" name="gender" value="Nam"> Nam
+            <input type="radio" name="gender" value="Nữ"> Nữ
+            <span class="error-msg" id="error-gender"></span>
+        </div>
+
+        <div class="terms-group">
+            <input type="checkbox" id="terms"> Tôi đồng ý với điều khoản
+            <span class="error-msg" id="error-terms"></span>
+        </div>
+
+        <button type="submit">Đăng Ký Ngay</button>
+    </form>
+
+    <div id="successMessage" style="display: none;">
+        <h1 style="font-size: 50px;">🎉</h1>
+        <h3>Đăng ký thành công!</h3>
+        <p id="welcomeUser"></p>
+    </div>
+</div>
+
+<script>
+    const form = document.getElementById('registerForm');
+    
+    // Hàm tiện ích hiển thị lỗi
+    const showError = (id, message) => {
+        const input = document.getElementById(id);
+        const errorSpan = document.getElementById(`error-${id}`);
+        if (input && input.type !== 'radio') input.classList.add('invalid');
+        errorSpan.innerText = message;
+    };
+
+    // Hàm tiện ích xóa lỗi
+    const clearError = (id) => {
+        const input = document.getElementById(id);
+        const errorSpan = document.getElementById(`error-${id}`);
+        if (input && input.type !== 'radio') {
+            input.classList.remove('invalid');
+            input.classList.add('valid');
+        }
+        errorSpan.innerText = "";
+    };
+
+    // 1. Validate Họ tên
+    const validateFullname = () => {
+        const val = document.getElementById('fullname').value.trim();
+        const regex = /^[a-zA-ZÀ-ỹ\s]+$/;
+        if (val === "") {
+            showError('fullname', "Họ tên không được để trống");
+            return false;
+        } else if (val.length < 3) {
+            showError('fullname', "Họ tên phải có ít nhất 3 ký tự");
+            return false;
+        } else if (!regex.test(val)) {
+            showError('fullname', "Họ tên chỉ được chứa chữ cái");
+            return false;
+        }
+        clearError('fullname');
+        return true;
+    };
+
+    // 2. Validate Email
+    const validateEmail = () => {
+        const val = document.getElementById('email').value.trim();
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!regex.test(val)) {
+            showError('email', "Email không đúng định dạng name@domain.com");
+            return false;
+        }
+        clearError('email');
+        return true;
+    };
+
+    // 3. Validate Số điện thoại
+    const validatePhone = () => {
+        const val = document.getElementById('phone').value.trim();
+        const regex = /^0[0-9]{9}$/;
+        if (!regex.test(val)) {
+            showError('phone', "SĐT phải có 10 số và bắt đầu bằng số 0");
+            return false;
+        }
+        clearError('phone');
+        return true;
+    };
+
+    // 4. Validate Mật khẩu
+    const validatePassword = () => {
+        const val = document.getElementById('password').value;
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+        if (!regex.test(val)) {
+            showError('password', "Mật khẩu ít nhất 8 ký tự, gồm chữ HOA, thường và số");
+            return false;
+        }
+        clearError('password');
+        return true;
+    };
+
+    // 5. Validate Xác nhận mật khẩu
+    const validateConfirm = () => {
+        const pass = document.getElementById('password').value;
+        const confirm = document.getElementById('confirmPassword').value;
+        if (confirm === "" || confirm !== pass) {
+            showError('confirmPassword', "Mật khẩu xác nhận không khớp");
+            return false;
+        }
+        clearError('confirmPassword');
+        return true;
+    };
+
+    // 6. Validate Giới tính
+    const validateGender = () => {
+        const genders = document.getElementsByName('gender');
+        let checked = false;
+        for (const g of genders) { if (g.checked) checked = true; }
+        if (!checked) {
+            showError('gender', "Vui lòng chọn giới tính");
+            return false;
+        }
+        clearError('gender');
+        return true;
+    };
+
+    // 7. Validate Điều khoản
+    const validateTerms = () => {
+        const terms = document.getElementById('terms');
+        if (!terms.checked) {
+            showError('terms', "Bạn phải đồng ý với điều khoản");
+            return false;
+        }
+        clearError('terms');
+        return true;
+    };
+
+    // Gắn sự kiện Blur & Input cho các trường văn bản
+    const fields = ['fullname', 'email', 'phone', 'password', 'confirmPassword'];
+    fields.forEach(id => {
+        const element = document.getElementById(id);
+        element.addEventListener('blur', () => {
+            if (id === 'fullname') validateFullname();
+            if (id === 'email') validateEmail();
+            if (id === 'phone') validatePhone();
+            if (id === 'password') validatePassword();
+            if (id === 'confirmPassword') validateConfirm();
+        });
+        element.addEventListener('input', () => {
+            clearError(id); // Xóa lỗi ngay khi người dùng bắt đầu gõ lại
+        });
+    });
+
+    // Xử lý Submit
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Sử dụng toán tử & để ép chạy toàn bộ các hàm validate (không dừng sớm)
+        const isAllValid = validateFullname() & 
+                           validateEmail() & 
+                           validatePhone() & 
+                           validatePassword() & 
+                           validateConfirm() & 
+                           validateGender() & 
+                           validateTerms();
+
+        if (isAllValid) {
+            const name = document.getElementById('fullname').value;
+            form.style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('welcomeUser').innerText = `Chào mừng ${name} đã tham gia hệ thống!`;
+        }
+    });
+</script>
+
+</body>
+</html>

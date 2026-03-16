@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Quan ly diem sinh vien</title>
+
+<style>
+
+/* =============================
+   CSS TRANG TRÍ GIAO DIỆN
+============================= */
+
+/* style cho toàn bộ trang */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 40px;
+    background: #f5f7fb;
+}
+
+/* style cho input và select */
+input, select {
+    padding: 8px 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+}
+
+/* khi click vào input */
+input:focus {
+    border-color: #4CAF50;
+}
+
+/* style cho button */
+button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    background: #4CAF50;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+/* hover button */
+button:hover {
+    background: #45a049;
+}
+
+/* bảng */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* header bảng */
+th {
+    background: #4CAF50;
+    color: white;
+    padding: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* ô dữ liệu */
+td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+/* hover dòng */
+tbody tr:hover {
+    background: #f1f7ff;
+}
+
+/* dòng chẵn */
+tbody tr:nth-child(even) {
+    background: #fafafa;
+}
+
+/* sinh viên yếu */
+.yeu {
+    background: #ffe9e9 !important;
+}
+
+/* nút xóa */
+.deleteBtn {
+    background: #e74c3c;
+}
+
+.deleteBtn:hover {
+    background: #c0392b;
+}
+
+/* thống kê */
+#stats {
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h2>Quan li diem sinh vien</h2>
+
+<!-- nhập tên sinh viên -->
+<input type="text" id="name" placeholder="Ho ten">
+
+<!-- nhập điểm -->
+<input type="number" id="score" placeholder="Diem (0-10)" step="0.1">
+
+<!-- nút thêm sinh viên -->
+<button id="addBtn">Them</button>
+
+<!-- khu vực tìm kiếm và lọc -->
+<div style="margin-top:20px;">
+
+    <!-- ô tìm kiếm -->
+    <input type="text" id="search" placeholder="Tim kiem sinh vien">
+
+    <!-- select lọc xếp loại -->
+    <select id="filterRank">
+        <option value="all">Tat ca</option>
+        <option value="Xuat Xac">Xuat Xac</option>
+        <option value="Gioi">Gioi</option>
+        <option value="Kha">Kha</option>
+        <option value="Trung binh">Trung binh</option>
+        <option value="Yeu">Yeu</option>
+    </select>
+
+</div>
+
+<!-- bảng hiển thị danh sách sinh viên -->
+<table>
+
+<thead>
+<tr>
+    <th>STT</th>
+    <th>Ho ten</th>
+    <th id="sortScore">Diem</th> <!-- click để sắp xếp -->
+    <th>Xep loai</th>
+    <th>Thao tac</th>
+</tr>
+</thead>
+
+<!-- JS sẽ thêm dữ liệu vào đây -->
+<tbody id="tablebody"></tbody>
+
+</table>
+
+<!-- thống kê -->
+<div id="stats">
+    Tong SV: 0 | Diem TB: 0
+</div>
+
+<script>
+
+/* =============================
+   KHAI BÁO BIẾN
+============================= */
+
+let students = [];            // mảng chứa toàn bộ sinh viên
+let filteredStudents = [];    // mảng sau khi lọc và tìm kiếm
+
+let searchKeyword = "";       // từ khóa tìm kiếm
+let selectedRank = "all";     // xếp loại đang lọc
+let sortOrder = null;         // trạng thái sắp xếp
+
+
+/* =============================
+   HÀM XẾP LOẠI SINH VIÊN
+============================= */
+
+function getRank(score) {
+
+    if (score >= 9) return "Xuat Xac";
+    if (score >= 8.5) return "Gioi";
+    if (score >= 7) return "Kha";
+    if (score >= 5) return "Trung binh";
+
+    return "Yeu";
+
+}
+
+
+/* =============================
+   HÀM LỌC + TÌM + SẮP XẾP
+============================= */
+
+function applyFilters() {
+
+    filteredStudents = students.filter(sv => {
+
+        // kiểm tra tên có chứa từ khóa tìm kiếm
+        const matchName =
+            sv.name.toLowerCase().includes(searchKeyword.toLowerCase());
+
+        // lấy xếp loại sinh viên
+        const rank = getRank(sv.score);
+
+        // kiểm tra đúng xếp loại được chọn
+        const matchRank =
+            selectedRank === "all" || rank === selectedRank;
+
+        return matchName && matchRank;
+
+    });
+
+    // sắp xếp tăng dần
+    if (sortOrder === "asc") {
+        filteredStudents.sort((a, b) => a.score - b.score);
+    }
+
+    // sắp xếp giảm dần
+    if (sortOrder === "desc") {
+        filteredStudents.sort((a, b) => b.score - a.score);
+    }
+
+    renderTable();
+
+}
+
+
+/* =============================
+   HIỂN THỊ BẢNG
+============================= */
+
+function renderTable() {
+
+    const tbody = document.getElementById("tablebody");
+
+    tbody.innerHTML = "";
+
+    // nếu không có kết quả
+    if (filteredStudents.length === 0) {
+
+        tbody.innerHTML =
+            `<tr><td colspan="5">Khong co ket qua</td></tr>`;
+
+        return;
+
+    }
+
+    filteredStudents.forEach((sv, index) => {
+
+        const tr = document.createElement("tr");
+
+        // nếu sinh viên yếu
+        if (sv.score < 5) {
+            tr.classList.add("yeu");
+        }
+
+        tr.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${sv.name}</td>
+            <td>${sv.score}</td>
+            <td>${getRank(sv.score)}</td>
+            <td>
+                <button data-index="${index}" class="deleteBtn">
+                    Xoa
+                </button>
+            </td>
+        `;
+
+        tbody.appendChild(tr);
+
+    });
+
+    updateStats();
+
+}
+
+
+/* =============================
+   TÍNH THỐNG KÊ
+============================= */
+
+function updateStats() {
+
+    const total = students.length;
+
+    let avg = 0;
+
+    if (total > 0) {
+
+        const sum =
+            students.reduce((s, sv) => s + sv.score, 0);
+
+        avg = (sum / total).toFixed(2);
+
+    }
+
+    document.getElementById("stats").innerText =
+        `Tong SV: ${total} | Diem TB: ${avg}`;
+
+}
+
+
+/* =============================
+   THÊM SINH VIÊN
+============================= */
+
+function addStudent() {
+
+    const nameInput = document.getElementById("name");
+    const scoreInput = document.getElementById("score");
+
+    const name = nameInput.value.trim();
+    const score = parseFloat(scoreInput.value);
+
+    // kiểm tra tên rỗng
+    if (name === "") {
+
+        alert("Ho ten khong duoc trong");
+        return;
+
+    }
+
+    // thêm sinh viên vào mảng
+    students.push({
+        name: name,
+        score: score
+    });
+
+    applyFilters();
+
+    // reset input
+    nameInput.value = "";
+    scoreInput.value = "";
+
+    // đưa con trỏ về ô tên
+    nameInput.focus();
+
+}
+
+
+/* =============================
+   CÁC SỰ KIỆN
+============================= */
+
+// click nút thêm
+document.getElementById("addBtn")
+.addEventListener("click", addStudent);
+
+
+// nhấn Enter trong ô điểm
+document.getElementById("score")
+.addEventListener("keypress", function(e) {
+
+    if (e.key === "Enter") {
+
+        e.preventDefault();
+        addStudent();
+
+    }
+
+});
+
+
+// xóa sinh viên
+document.getElementById("tablebody")
+.addEventListener("click", function(e) {
+
+    if (e.target.classList.contains("deleteBtn")) {
+
+        const index = e.target.dataset.index;
+
+        const student = filteredStudents[index];
+
+        const realIndex = students.indexOf(student);
+
+        students.splice(realIndex, 1);
+
+        applyFilters();
+
+    }
+
+});
+
+
+// tìm kiếm realtime
+document.getElementById("search")
+.addEventListener("input", function(e) {
+
+    searchKeyword = e.target.value;
+
+    applyFilters();
+
+});
+
+
+// lọc theo xếp loại
+document.getElementById("filterRank")
+.addEventListener("change", function(e) {
+
+    selectedRank = e.target.value;
+
+    applyFilters();
+
+});
+
+
+// click để sắp xếp điểm
+document.getElementById("sortScore")
+.addEventListener("click", function() {
+
+    if (sortOrder === "asc") {
+        sortOrder = "desc";
+    } else {
+        sortOrder = "asc";
+    }
+
+    applyFilters();
+
+});
+
+
+// chạy lần đầu
+applyFilters();
+
+</script>
+
+</body>
+</html>
