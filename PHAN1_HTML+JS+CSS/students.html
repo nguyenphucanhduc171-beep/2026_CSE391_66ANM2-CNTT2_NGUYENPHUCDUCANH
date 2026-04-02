@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>STUDENT MANAGEMENT SYSTEM</h1>
+
+        <div class="summary">
+            Tổng số sinh viên: <span id="total">0</span> |
+            Điểm TB lớp: <span id="avg">0</span>
+        </div>
+
+        <button id="btnAdd" class="btn-add">
+            THÊM SINH VIÊN
+        </button>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>MÃ SV</th>
+                    <th>HỌ TÊN</th>
+                    <th>NGÀY SINH</th>
+                    <th>LỚP</th>
+                    <th>GPA</th>
+                    <th>ACTIONS</th>
+                </tr>
+            </thead>
+
+            <tbody id="studentTable"></tbody>
+        </table>
+
+    </div>
+
+
+    <!-- POPUP -->
+    <div class="modal" id="modal">
+
+        <div class="modal-content">
+
+            <div class="modal-body">
+
+                <h2>Thêm/Sửa Sinh Viên</h2>
+
+                <form id="studentForm">
+
+                    <input type="hidden" id="editIndex">
+
+                    <label>Mã sinh viên *</label>
+                    <input id="studentId">
+                    <span class="error" id="errId"></span>
+
+                    <label>Họ và tên *</label>
+                    <input id="fullName">
+                    <span class="error" id="errName"></span>
+
+                    <label>Ngày sinh *</label>
+                    <input type="date" id="dob">
+                    <span class="error" id="errDob"></span>
+
+                    <label>Lớp học *</label>
+                    <select id="class">
+                        <option value="">Chọn lớp</option>
+                        <option>A</option>
+                        <option>B</option>
+                        <option>C</option>
+                        <option>D</option>
+                    </select>
+                    <span class="error" id="errClass"></span>
+
+                    <label>GPA *</label>
+                    <input id="gpa">
+                    <span class="error" id="errGpa"></span>
+
+                    <label>Email *</label>
+                    <input id="email">
+                    <span class="error" id="errEmail"></span>
+
+                    <label>Password *</label>
+                    <input type="password" id="password">
+                    <span class="error" id="errPass"></span>
+
+                    <label>Confirm Password *</label>
+                    <input type="password" id="confirmPassword">
+                    <span class="error" id="errConfirm"></span>
+
+                    <div class="form-buttons">
+                        <button type="submit" class="btn-save">
+                            LƯU SINH VIÊN
+                        </button>
+
+                        <button type="button" id="btnCancel" class="btn-cancel">
+                            HUỶ
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>
